@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="Vertex, singple page mobile app theme.">
+    <link rel="shortcut icon" href="/Content/images/D1.ico" />
+    <meta name="keywords" content="vertex, theme, app, single page">
+    <meta name="author" content="rype pixel">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drive Safe </title>
+
+    <!-- CSS file links -->
+
+    <link href="/Content/bootstrap.css" rel="stylesheet" />
+    <link href="/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="/Content/css/jquery.bxslider.css" rel="stylesheet" />
+    <link href="/Content/css/lightbox.css" rel="stylesheet" />
+    <link href="/Content/css/responsive.css" rel="stylesheet" />
+    <link href="/Content/css/style.css" rel="stylesheet" />
+    <script src="~/Content/js/bootstrap.min.js"></script>		<!-- bootstrap -->
+
+
+    @Styles.Render("~/Content/bootstrap.css")
+    @Styles.Render("~/Content/bootstrap-theme.css")
+    @Styles.Render("~/Content/bootstrap-theme.min.css")
+    @Styles.Render("~/Content/styles.css")
+    <script src="~/Content/jquery.js"></script>
+    <link href="~/Content/style.css" rel="stylesheet" />
+
+
+
+</head>
+<body>
+
+    <!-- Header Start -->
+    <header class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button style="background-color:#339999" type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+            </div>
+
+
+
+
+
+            <a href="~/Home/DoLogin"><img style="width:155px;height:90%;margin-left:-4%" class="img-responsive pull-left" src="~/Content/images/icons/logo.png"></a>
+
+            <div class="navbar-collapse collapse">
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="~/Home/Index" style=" color:black;font:bold;font-size:large">Home</a></li>
+                    <li><a href="~/Home/DashBoard" style="color:black;font:bold;font-size:large">DashBoard</a></li>
+                    <li><a href="~/Home/Feedback" style="color:black;font:bold;font-size:large">Feedback</a></li>
+                     <li><a href="~/Home/Logout" style=" color:black;font:bold;font-size:large">Logout</a></li>
+
+
+                </ul>
+
+
+
+            </div><!--/.navbar-collapse -->
+
+        </div><!-- END Container -->
+
+    </header><!-- END Header -->
+    @RenderBody();
+    <br /><br /><br /><br /><br />
+    <footer style="background-image:url('/Content/images/footer.png')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 about">
+
+                    <h4 style="color:white">Drive Safe</h4>
+                    <p style="color:wheat">
+                        This application is for the modern day city commuter by extracting vehicle performance
+                        statistics, generating reports and creating suggestions for drive safety and vehicle health improvement.<br /><br />
+
+                    </p>
+                    <ul class="socialIcons">
+                        <li><a href="https://www.facebook.com/DrifeSafe/?fref=ts" class="fbIcon" target="_blank"></a></li>
+
+                        <li><a href="#" class="googleIcon" target="_blank"></a></li>
+
+                    </ul>
+                    <p style="color:white; font-size:15px"><span style="font-size:x-large">&copy;</span>  2016 TEAM DRIVE SAFE ALL RIGHTS RESERVED</p>
+                </div>
+
+                <div class="col-lg-4 contact">
+                    <h4 style="color:white">Contact Info</h4>
+                    <p style="color:wheat">
+
+                        Punjab University College of Information Technology, University of The Punjab, Allama Iqbal Campus, Shahrah-e-Quaid-e-Azam (The Mall), 54000 Lahore, Pakistan.
+                    </p>
+                    <ul>
+                        <li style="color:wheat"><img src="/Content/images/icons/footerPhone.png" alt="phone icon" />0341-408899</li>
+                        <li><img src="/Content/images/icons/footerMail.png" alt="mail icon" /><a href="https://www.facebook.com/AIMResearchLab/?fref=ts" style="color:wheat" target="_blank">AIM Research Lab</a></li>
+
+                    </ul>
+                </div>
+            </div><!-- END Row -->
+        </div><!-- END Container -->
+    </footer><!-- END Footer -->
+
+</body></html>

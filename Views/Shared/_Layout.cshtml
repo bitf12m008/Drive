@@ -1,0 +1,767 @@
+﻿@using DriveSafe_Server
+@model DriveSafe_Server.Driver
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="shortcut icon" href="http://example.com/myicon.png"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="Vertex, singple page mobile app theme.">
+    <meta name="keywords" content="vertex, theme, app, single page">
+    <meta name="author" content="rype pixel">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drive Safe </title>
+    <link rel="shortcut icon" href="/Content/images/D1.ico" />
+    <!-- CSS file links -->
+
+    <link href="/Content/bootstrap.css" rel="stylesheet" />
+    <link href="/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="/Content/css/jquery.bxslider.css" rel="stylesheet" />
+    <link href="/Content/css/lightbox.css" rel="stylesheet" />
+    <link href="/Content/css/responsive.css" rel="stylesheet" />
+    <link href="/Content/css/style.css" rel="stylesheet" />
+
+
+   @Styles.Render("~/Content/bootstrap.css")
+    @Styles.Render("~/Content/bootstrap-theme.css")
+    @Styles.Render("~/Content/bootstrap-theme.min.css")
+    @Styles.Render("~/Content/styles.css")
+    <script src="~/Content/jquery.js"></script>
+    <link href="~/Content/style.css" rel="stylesheet" />
+
+
+   <script>
+        $().ready(function () {
+        if ($('#showpop').val() == "1") {
+                $('#footer-').removeClass("hidden");;
+
+                $('#myModal').modal('show');
+
+
+            } else if ($('#showpop').val() == "2") {
+                $('#invalid').removeClass("hidden");;
+
+                $('#myModal').modal('show');
+            }
+
+            $('#btn2').click(function () {
+                $('#footer-').addClass("hidden");
+                $('#invalid').addClass("hidden");
+            });
+
+        });
+    </script>
+
+
+</head>
+<body>
+
+    <!-- Header Start -->
+    <header class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button style="background-color:#339999" type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+               </div>
+            @if (Session["User"] == null)
+            {
+                <button type="button" id="btn2" style="background-color:#339999;color:white;margin-left:20px;font-size:large" class="btn  btn-lg  pull-right" data-toggle="modal" data-target="#myModal">
+                    Login
+                </button>
+            }
+            else
+            {
+                <a style="background-color:#339999;color:wheat;margin-left:20px;color:white;margin-left:20px;font-size:large" class="btn  btn-lg  pull-right" href="~/Home/DoLogin">
+                    @{Driver obj = (Driver)Session["User"];
+                    }
+                    @obj.Name
+                </a>
+
+            }
+
+
+            <a href="#sliderAnchor"><img style="width:155px;height:90%;margin-left:-4%" class="img-responsive pull-left" src="~/Content/images/icons/logo.png"></a>
+
+
+            <div class="navbar-collapse collapse">
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="current"><a style="color:black;font:bold;font-size:large" href="#sliderAnchor">Home</a></li>
+                    <li><a style="color:black;font:bold;font-size:large"  href="#featuresAnchor">Features</a></li>
+                    <li><a style="color:black;font:bold;font-size:large"  href="#help">Help</a></li>
+                    <li><a style="color:black;font:bold;font-size:large"  href="#howItWorksAnchor">How It Works</a></li>
+
+                    <li><a style="color:black;font:bold;font-size:large"  href="#faqAnchor">FAQ</a></li>
+                    <li><a style="color:black;font:bold;font-size:large"  href="#ourTeamAnchor">Our Team</a></li>
+                    <li><a style="color:black;font-size:large"  href="#contactAnchor">Contact</a></li>
+                </ul>
+
+
+
+            </div><!--/.navbar-collapse -->
+
+        </div><!-- END Container -->
+
+    </header><!-- END Header -->
+    <!-- Modal -->
+    <div class="modal fade  pull-right" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Login Here</h4>
+                </div>
+                <form method="post" class="form-group" action="/Home/DoLogin">
+                    <div class="modal-body ">
+
+
+
+                        <label>User Name</label>
+                        <input type="text" class="form-control" name="Email" />
+                        <label>Password</label>
+                        <input type="password" class="form-control" name="Password" />
+
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <input type="submit" style="background-color:#339999;color:white" class="btn " value="Login">
+                        @if (Session["Error"] != null)
+                        {
+                            <div style="font-weight:bold;color:red;font-size:15px">
+
+                                <p class="bg-warning">Invalid Username Or Password</p>
+                            </div>
+                        }
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+    <!-- Slider Start -->
+
+    <a class="anchor" id="sliderAnchor"></a>
+    <section class="jumbotron">
+        <div class="container">
+            <ul class="slides" style="display:none;">
+                <li>
+                    <div class="col-lg-6">
+                        <img  class="img-responsive" style="border-radius:5%" src="~/Content/images/slider.png" alt="app1" />
+                        
+                    </div>
+                    <div class="col-lg-6 slideText">
+                        <h1 style ="color:white"><span>Drive Safe</span></h1> <p style="font-size:25px;text-align:start;color:white">
+    Lets a driver know in real-time if their driving style falls below the accepted parameters set by
+ the company so they can instantly mitigate any unsafe driving. Over time, this helps them learn better driving techniques and helps ensure you save fuel, have safer 
+drivers and protect your company's reputation.<br /><br />
+    <a href="#" class="button">Download Drive Safe</a>
+</p>
+                    </div>
+                </li><!-- END Slide 1 -->
+                <li>
+                    
+                    <div class="col-lg-7 slideText">
+                        <h1 style ="color:white"><span>Manage your fleets</span></h1> <h4 style="font-size:25px;text-align:start;color:white">
+ Move your fleet by using Drive Safe. Monitor your drivers' driving style, save extra cost of fuel, track your drivers' locations, and visualize report of drivers on manager dashboard. 
+    
+</h4>
+                    </div>
+                    <div class="col-lg-5">
+                        
+                        <img class="img-responsive" style="border-radius:5%" src="~/Content/images/fleet.jpg" alt="app1" />
+                        <!--<img id="iphoneWhite" class="img-responsive" style="border-radius:5%" src="~/Content/images/adapt.png" alt="app2" />-->
+                    </div>
+                </li><!-- END Slide 1 -->
+
+                <li style="text-align:center;">
+                    <div class="col-lg-12">
+                        <h1 style="color:white">Why Drive Safe?</h1>
+                        <p> <span style="color:white"> Rash driving behavior can mean more accidents, larger fuel bills, greater maintenance and repair costs. Your drivers' driving reflects on the reputation of your fleet so ensuring that your vehicles are being driven in the right way is crucial. Identify and train poor drivers to minimize risk. Drive Safe gives real-time alerts and reports about driver behavior that can be utilized by managers and the drivers themselves to improve safety out on the road.
+</span></p>
+                        
+                    </div>
+                </li>
+            </ul>
+        </div><!-- END Container -->
+        <div class="sliderControls">
+            <span id="slider-prev"></span>
+            <span id="slider-next"></span>
+        </div>
+    </section><!-- END Slider -->
+    <!-- sub-slider message Start -->
+    
+    <section id="subSliderMessage">
+        <div class="container">
+            <div  class="row">
+                <div class="col-lg-12">
+                    <h2 style="color:black"> <span style="color:#339999">Drive Safe</span> is an Android application that cares about you and your vehicle.</h2>
+
+                </div>
+            </div>
+        </div><!-- END container -->
+    </section><!-- END Sub-slider message -->
+    <!-- Features Start -->
+    <a class="anchor" id="featuresAnchor"></a>
+    <section id="features">
+        <div class="container">
+            <div class="row"><div class="col-lg-12"><h3 style="color:#339999">Features</h3></div><div class="col-lg-12"><img class="dividerWide" src="/Content/images/divider.png" alt=""></div></div>
+            <div class="row">
+                <div class="col-lg-4 featureItem">
+                    <div class="featureIcon"><img style="border-radius:5%;" src="/Content/images/Feature'sIcon/realtime.png" /></div>
+                    <h4 style="color:black;margin-left:100px">Dashboard</h4>
+                    <p style="color:black;margin-left:100px">Mobile screen looks like dashboard of vehicle. Dashboard's display the vechicle Speed, RPM, Battery Voltage, Throttle Position, Fuel Type and Coolant Temperature.</p>
+
+                </div>
+
+                <span class="glyphicon  icon-pie-chart"></span>
+                <div class="col-lg-4 featureItem">
+
+                    <div class="featureIcon"><img style="border-radius:5%;" src="/Content/images/Feature'sIcon/faultcode.png" /></div>
+                    <h4 style="color:black;margin-left:100px">Car Health</h4>
+                    <p style="color:black;margin-left:100px">Drive Safe monitors car health, it detects the problem in car before any major issue occur, and gives the solution of the problem in a very simple and descriptive manner.</p>
+                </div>
+                <div class="col-lg-4 featureItem">
+                    <div class="featureIcon">  <img style="border-radius:5%;" src="/Content/images/Feature'sIcon/report.png" /></div>
+                    <h4 style="margin-left:100px">Record Trip</h4>
+                    <p style="color:black;margin-left:100px"><span>Drive Safe</span> logs all the trip data based on route and time stamp, and prepare comprehensive trip report. </p>
+                </div>
+
+
+            </div><!-- END Row -->
+            <div class="row">
+                <div class="col-lg-4 featureItem">
+                    <div class="featureIcon"><img style="border-radius:5%;" src="/Content/images/Feature'sIcon/upload.png" /></div>
+
+                    <h4 style="color:black;margin-left:100px">Upload Data</h4>
+                    <p style="color:black;margin-left:100px">Upload trip data from mobile to server server and visualize it on Drive Safe website.</p>
+                </div>
+                <div class="col-lg-4 featureItem">
+                    <div class="featureIcon"><img style="border-radius:5%;" src="/Content/images/Feature'sIcon/visualization.png" /></div>
+
+                    <h4 style="color:black;margin-left:100px">Visualize Data</h4>
+                    <p style="color:black;margin-left:100px">Visualize trip detail logs on website. Login account from website and visualize trip log and trip report.</p>
+                </div>
+
+                <div class="col-lg-4 featureItem">
+
+                    <div class="featureIcon"><img style="border-radius:5%;" src="/Content/images/Feature'sIcon/traffic_guid.png" /></div>
+                    <h4 style="color:black;margin-left:100px">Traffic Guide</h4>
+                    <p style="color:black;margin-left:100px">In this module driver can see the guide about traffic and road signs. </p>
+
+                </div>
+
+
+            </div><!-- END Row -->
+
+
+            <div class="row">
+                <div class="col-lg-4 featureItem">
+
+                    <div class="featureIcon"><img style="border-radius:5%;" src="/Content/images/Feature'sIcon/alert.png" /></div>
+                    <h4 style="color:black;margin-left:100px">Warning Alerts</h4>
+                    <p style="color:black;margin-left:100px">Drive Safe gives real-time alerts for speeding, harsh braking, rapid acceleration and more.  </p>
+                </div>
+
+                <div class="col-lg-4 featureItem">
+
+                    <div class="featureIcon"><img style="border-radius:5%;" src="~/Content/images/Feature'sIcon/setting.png" /></div>
+                    <h4 style="color:black;margin-left:100px">Customize Alerts</h4>
+                    <p style="color:black;margin-left:100px">Customize threshold values of alerts to fit your needs.  </p>
+                </div>
+                <div class="col-lg-4 featureItem">
+
+                    <div class="featureIcon"><img style="border-radius:5%;" src="/Content/images/Feature'sIcon/silence.png" /></div>
+                    <h4 style="color:black;margin-left:100px">Do not Disturb</h4>
+                    <p style="color:black;margin-left:100px">If you choose, automatic sets your Android phone to Do Not Disturb mode while you’re driving to reduce interruptions.</p>
+                </div>
+
+
+            </div><!-- END Row -->
+
+        </div><!-- END Container -->
+
+    </section><!-- END Features -->
+    <!-- Start help -->
+    <a class="anchor" id="help"></a>
+    <section id="help">
+        <div class="container">
+            <div class="row"><div class="col-lg-12"><h3 style="color:#339999">Help</h3></div><div class="col-lg-12"><img class="dividerWide" src="/Content/images/divider.png" alt=""></div></div>
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="image">
+                        <img src="/Content/images/Help/bluetoothCon.png" class="screenshotImage" alt="placeholder" />
+                    </div>
+                    <h4 style="color:black">Bluetooth Connection</h4>
+                    <p style="color:black">
+                        To use <span>Drive Safe</span>
+                        enable  Bluetooth of cell phone.
+                        Paired cell phone with OBD2 adapter.
+                        These steps are required only for the first time connection. Next time if Bluetooth is enable, it will automatically connect cell phone, with vehicle within the Bluetooth range.
+                    </p>
+                </div>
+                <div class="col-lg-3">
+                    <div class="image">
+                        <img src="/Content/images/Help/signup.png" class="screenshotImage" alt="placeholder" />
+                    </div>
+                    <h4 style="color:black">Signup</h4>
+                    <p style="color:black">In Drive Safe application make an account by using signup option present at the toolbar. Anyone can directly login from application using login option at the toolbar if he or she have already an account. Signup and login option require internet connection.  </p>
+                </div>
+                <div class="col-lg-3">
+                    <div class="image">
+                        <img src="/Content/images/Help/uploadT.png" class="screenshotImage" alt="placeholder" />
+                    </div>
+                    <h4 style="color:black">Upload Trip</h4>
+                    <p style="color:black">Drive Safe record all detail about a trip with respect to time and route stamp, and prepare a report of trip detail. Upload trip detail and reports on server by clicking upload trip log button present at report card menu. After uploading trip detail, data of trip logs from mobile will be deleted.  </p>
+
+                </div>
+                <div class="col-lg-3">
+                    <div class="image">
+                        <img src="/Content/images/Help/visualization.png" class="screenshotImage" alt="placeholder" />
+                    </div>
+                    <h4 style="color:black">Visualize Trip</h4>
+                    <p style="color:black">Drive Safe gives you a summary of trip logs in the form of report card and Google map. You can see your report card from drive safe application. Plus you can also visualize detail trip log data on your profile after uploading trip log and reports on website.</p>
+                </div>
+            </div><!-- END Row -->
+        </div><!-- END Container -->
+    </section><!-- END Screenshots -->
+    <!-- Start Promo box -->
+    <section id="promoBox">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h4 style="font-family:Georgia, 'Times New Roman', Times, serif">
+                        <span style="color:white;font-size:x-large"> Drive Safe </span>
+                        monitors unsafe driving behavior and notify the drivers with audible and visible alerts if any unsafe driving maneuver detected.
+                    </h4>
+
+                </div>
+            </div><!-- END Row -->
+        </div><!-- END container -->
+    </section><!-- END Promo box -->
+    <!-- Start How It Works -->
+    <a class="anchor" id="howItWorksAnchor"></a>
+    <section id="howItWorks">
+        <div class="container">
+            <div class="row"><div class="col-lg-12"><h3 style="color:#339999">How It Works</h3></div><div class="col-lg-12"><img class="dividerWide" src="/Content/images/divider.png" alt=""></div></div>
+            <div class="row">
+                <div class="col-lg-6 howItWorksGraphic">
+                    <img class="iSmall" src="/Content/images/port.png" alt="iphone" />
+                    <img class="dividerHalf" src="/Content/images/dividerHalf.png" alt="divider" />
+                </div>
+                <div class="col-lg-6">
+                    <h4></h4><br />
+                    <p>
+                    <p style="color:black ;text-align:justify">
+                        Can-bus protocol is implemented in every vehicle since 2007. To use our application first of  all  you have to make sure that your vehicle has this 16-pin port. That is known as <span>OBD2 </span>port.
+                        OBD2 port is below the dashboard of the vehicle.
+                    </p>
+                    
+                </div>
+            </div><!-- END Row -->
+            <div class="transition1"></div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <h4> <span style="color:#339999">Required Hardware</span></h4><br />
+                    <p style="color:black">
+                        You have to buy an adapter <span>ELM327</span> OBD-II scanner for bluetooth connection to use Drive Safe application.
+                        The ElM327 supports these protocol SAE J1850 PWM (41.6 kbit/s),SAE J1850 VPW (10.4 kbit/s),ISO 9141-2 (5 baud init, 10.4 kbit/s),ISO 14230-4 KWP (5 baud init, 10.4 kbit/s),
+                        ISO 14230-4 KWP (fast init, 10.4 kbit/s),ISO 15765-4 CAN (11 bit ID, 500 kbit/s),ISO 15765-4 CAN (29 bit ID, 500 kbit/s),ISO 15765-4 CAN (11 bit ID, 250 kbit/s),ISO 15765-4 CAN (29 bit ID, 250 kbit/s)
+                        This adapter is workable for your vehicle if it has any of the above mentioned protocol.
+                    </p>
+                </div>
+                <div class="col-lg-6 howItWorksGraphic">
+                    <img class="iphoneSmall" src="/Content/images/elm.png" alt="elme" />
+                </div>
+            </div><!-- END Row -->
+            <div class="transition2"></div>
+            <div class="row">
+                <div class="col-lg-6 howItWorksGraphic">
+                    <img class="iphoneSmall" src="/Content/images/drive-safe.png" alt="iphone" />
+                </div>
+                <div class="col-lg-6">
+                    <h4>Working of <span style="color:#339999">Drive Safe </span></h4><br />
+                    <p style="color:black">
+                        Turn on Bluetooth visibilty of your cellphone to connect your vehicle using ELM327 adapter.
+                        When application is connected to your vehicle successfully now it is ready to communicate with <span>application.</span>
+                        After successfull connection, you can check Real time information like Speed, Throttle position, Fuel type, Battery voltage, Coolant temperature and RPM etc.
+                    </p>
+                </div>
+            </div><!-- END Row -->
+        </div><!-- END Container -->
+    </section><!-- END How It Works -->
+    <!-- Start faq-->
+    <section id="faq">
+        <a class="anchor" id="faqAnchor"></a>
+        <div class="container">
+            <div class="row"><div style="color:black"  class="col-lg-12"><h3 style="color:#339999">FAQ</h3></div><div class="col-lg-12"><img class="dividerWide" src="/Content/images/divider.png" alt=""></div></div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <ul class="tabs">
+                        <li><a  href="#tab1">Why do I need to use Drive Safe?</a></li>
+                        <li><a  href="#tab2">How do Drive safe  ensure Driver Safety?</a></li>
+                        <li><a  href="#tab3">How do Drive Safe ensure Car health?</a></li>
+                        <li><a  href="#tab4">From where I can buy ELM327 Adapter?</a></li>
+
+                    </ul>
+                </div>
+                <div class="col-lg-8 tabContent">
+                    <div id="tab1">
+                        <p style="color:black">
+                            <span>Why do I need to use Drive Safe?</span><br /><br />
+                            Drive Safe gives real-time alerts and reports about
+                            driver behavior that can be utilized by managers and the drivers themselves to improve safety out on the road.
+                        </p>
+                        <p>
+
+                        </p>
+                    </div>
+                    <div id="tab2">
+                        <p style="color:black">
+                            <span>How do Drive safe ensure Driver Safety?</span><br /><br />
+                            Drive safe ensure driver safety by providing drivers' driving report cards. So managers can identify and train poor drivers to minimize risk.             </p>
+                    </div>
+                    <div id="tab3">
+                        <p style="color:black">
+                            <span>How do Drive Safe ensure Car health?</span><br /><br />
+                            Drive safe can identify fault codes of your vehicle that can provide early diagnosis before any major issue.
+
+                        </p>
+                        <p>
+
+                        </p>
+                    </div>
+                    <div id="tab4">
+                        <p style="color:black">
+                            <span>From where I can buy ELM327 Adapter</span><br /><br />
+                            You can easily buy this adapter by contacting us and you can also by this online from any shoping site like draz.pk.
+                        </p>
+                    </div>
+
+                </div>
+            </div><!-- END Row -->
+        </div><!-- END Container -->
+    </section><!-- END Faq -->
+    <!-- Start Our Team -->
+    @RenderBody()
+    <section id="ourTeam">
+        <a class="anchor" id="ourTeamAnchor"></a>
+        <div class="container">
+
+            <div class="row"><div class="col-lg-12"><h3 style="color:#339999">Our Team</h3></div><div class="col-lg-12"><img class="dividerWide" src="/Content/images/divider.png" alt=""></div></div>
+            <div class="row">
+                <div class="col-lg-6 teamMemberInfo">
+                    <img class="img-circle teamImage" src="/Content/images/Team/Sir_waqar.jpg" alt="" />
+                    <div class="col-lg-7 teamText">
+                        <h4><a href="https://pk.linkedin.com/in/syed-waqar-jaffry-61937bb" target="_blank"><span style="color:#339999">Dr. Waqar Ul Qounain</span></a><br /> Primary Supervisor </h4>
+                        <p style="color:black">
+                          I am an Assistant Professor at Punjab University College of Information Technology, University of The Punjab Lahore, Pakistan. I completed my PhD under the supervision of prof. dr. Jan Treur and dr. Mark Hoogendoorn in 2011. My PhD research focus was on the Analysis and Validation of Models for Trust Dynamics.  
+
+                        </p>
+                        <ul class="socialIcons">
+                            <li><a href="https://www.facebook.com/swjaffry?fref=ts" class="fbIcon" target="_blank"></a></li>
+                            <li><a href="#" class="twitterIcon" ></a></li>
+                            <li><a href="#" class="googleIcon" ></a></li>
+
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="col-lg-6 teamMemberInfo">
+                    <img class="img-circle teamImage" src="/Content/images/Team/Sir_mubasher.jpg" alt="" />
+                    <div class="col-lg-7 teamText">
+                        <h4><a href="https://pk.linkedin.com/in/mianmuhammadmubasher" target="_blank"><span style="color:#339999">Mian M. Mubasher</span></a><br /> Secondary Supervisor</h4>
+                        <p style="color:black">
+                            I am pursuing my career as a researcher and academician in artificial intelligence and multidisciplinary research. These research domains have potential to address socially relevant problems. I am also exploring entrepreneurship opportunities in context of my research interests.
+                        </p>
+
+                        <ul class="socialIcons">
+                            <li><a href="https://www.facebook.com/mian.muhammad.mubasher.pk?fref=ts" class="fbIcon" target="_blank"></a></li>
+                            <li><a href="#" class="twitterIcon" ></a></li>
+                            <li><a href="#" class="googleIcon" ></a></li>
+
+                        </ul>
+                    </div>
+                </div>
+
+            </div><!-- END Row -->
+            <div class="row">
+                <div class="col-lg-6 teamMemberInfo">
+                    <img class="img-circle teamImage" src="/Content/images/Team/farhan.jpg" alt="" />
+<div class="col-lg-7 teamText">
+    <h4><a href="https://pk.linkedin.com/in/farhan-aamir-81a6a7109" target="_blank"><span style="color:#339999">Farhan Aamir</span></a><br /> Team lead & Developer </h4>
+    <p style="color:black">
+        I am a student of <span>Punjab University College of Information Technology,</span> enrolled in BS-IT. Drive Safe is my Final Year Project.
+    </p>
+    <ul class="socialIcons">
+        <li><a href="https://www.facebook.com/farhan.aamir.370?fref=ts" class="fbIcon" target="_blank"></a></li>
+        <li><a href="#" class="twitterIcon" ></a></li>
+        <li><a href="#" class="googleIcon" ></a></li>
+
+    </ul>
+</div>
+                    
+                </div>
+                <div class="col-lg-6 teamMemberInfo">
+                    <img class="img-circle teamImage" src="/Content/images/Team/furqan.jpg" alt="" />
+                    <div class="col-lg-7 teamText">
+                        <h4><a href="https://pk.linkedin.com/in/furqan-haider-42b80a116" target="_blank"><span style="color:#339999">Furqan Haider</span></a><br /> Developer</h4>
+                        <p style="color:black">
+                            I am a student of <span>Punjab University College of Information Technology,</span> enrolled in BS-IT. Drive Safe is my Final Year Project.
+                        </p>
+
+                        <ul class="socialIcons">
+                            <li><a href="https://www.facebook.com/furqan.haider.148" class="fbIcon" target="_blank"></a></li>
+                            <li><a href="#" class="twitterIcon" ></a></li>
+                            <li><a href="#" class="googleIcon" ></a></li>
+                           
+                        </ul>
+                    </div>
+                </div>
+
+            </div><!-- END Row -->
+            <div class="row">
+                <div class="col-lg-6 teamMemberInfo">
+                    <img class="img-circle teamImage" src="/Content/images/Team/junaid.jpg" alt="" />
+                    <div class="col-lg-7 teamText">
+                        <h4><a href="https://pk.linkedin.com/in/junaid-ch-448742116" target="_blank"><span style="color:#339999">Junaid Ch</span></a><br /> Developer</h4>
+                        <p style="color:black">
+                            I am a student of <span>Punjab University College of Information Technology,</span> enrolled in BS-IT. Drive Safe is my Final Year Project.
+                        </p>
+
+                        <ul class="socialIcons">
+                            <li><a href="https://www.facebook.com/junaid1ch?fref=ts" class="fbIcon" target="_blank"></a></li>
+                            <li><a href="#" class="twitterIcon"></a></li>
+                            <li><a href="#" class="googleIcon" ></a></li>
+                        </ul>
+                    </div> <!--end row-->
+                </div>
+                <div class="col-lg-6 teamMemberInfo">
+                    <img class="img-circle teamImage" src="/Content/images/Team/nazia.jpg" alt="" />
+
+                    <div class="col-lg-7 teamText">
+                        <h4><a href="https://pk.linkedin.com/in/nazia-sadiq-452275120" target="_blank"><span style="color:#339999">Nazia Sadiq</span></a><br /> Developer & Designer</h4>
+                        <p style="color:black">
+                            I am a student of <span>Punjab University College of Information Technology,</span> enrolled in BS-IT. Drive Safe is my Final Year Project.
+                        </p>
+                        <ul class="socialIcons">
+                            <li><a href="#" class="fbIcon" ></a></li>
+                            <li><a href="#" class="twitterIcon" ></a></li>
+                            <li><a href="#" class="googleIcon" ></a></li>
+
+                        </ul>
+                    </div>
+                    
+                </div>
+            </div><!-- END Container -->
+        </div>
+    </section><!-- END Our team -->
+    <!-- Start Contact -->
+    <section id="contact">
+        <a class="anchor" id="contactAnchor"></a>
+        <div class="container">
+            <div class="row"><div class="col-lg-12"><h2 style="color:white">Get In Touch</h2></div></div>
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <!-- Start contact form -->
+                @if (Session["FBError"] != null) { 
+                    <div><h1>You Already had gave us Feedback</h1></div>
+                }
+                
+                
+                @if (Session["FB"] == null) { 
+                    <form id="contactForm" method="post" action="~/Home/AddFeedback">
+                        <label style="display:none;" class="screen-reader-text">Name</label>
+                        <input type="text" name="name" placeholder="Your name" class="contactInput requiredField" id="contactInputName" value="" />
+                        <label style="display:none;" class="screen-reader-text">Email</label>
+                        <input type="text" name="email" placeholder="Your email" class="contactInput requiredField email" id="contactInputEmail" style="margin-right:0px" /><br />
+                        <label style="display:none;" class="screen-reader-text">Message</label>
+
+    
+    
+                           
+                        
+                        
+                        
+                            <textarea name="message" placeholder="Your message" class="contactMessage requiredField"></textarea>
+                        
+
+
+                        <input type="submit" name="submit" value="Send Message" class="buttonSmall" /><br /><br />
+                        <input type="hidden" name="submitted" id="submitted" value="true" />
+                    </form>
+                }
+                else
+                { 
+                    <div><h1>Thanks For your Feedback</h1></div>
+                }
+                    <!-- END Contact form -->
+
+                </div>
+            </div><!-- END Row -->
+        </div><!-- END Container -->
+    </section><!-- END Contact -->
+    <footer style="background-image:url('/Content/images/footer.png')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 about">
+
+                    <h4 style="color:white">Drive Safe</h4>
+                    <p style="color:wheat">
+                        This application is for the modern day city commuter by extracting vehicle performance
+                        statistics, generating reports and creating suggestions for drive safety and vehicle health improvement.<br /><br />
+
+                    </p>
+                    <ul class="socialIcons">
+                        <li><a href="https://www.facebook.com/DrifeSafe/?fref=ts" class="fbIcon" target="_blank"></a></li>
+                        
+                        <li><a href="#" class="googleIcon"></a></li>
+                        
+                    </ul>
+                    <p style="color:white; font-size:15px"><span style="font-size:x-large">&copy;</span>  2016 TEAM DRIVE SAFE ALL RIGHTS RESERVED</p>
+                </div>
+
+                <div class="col-lg-4 contact">
+                    <h4 style="color:white">Contact Info</h4>
+                    <p style="color:wheat">
+
+                         Punjab University College of Information Technology, University of The Punjab, Allama Iqbal Campus, Shahrah-e-Quaid-e-Azam (The Mall), 54000 Lahore, Pakistan. 
+                    </p>
+                    <ul>
+                        <li style="color:wheat"><img src="/Content/images/icons/footerPhone.png" alt="phone icon" />0341-408899</li>
+                        <li><img src="/Content/images/icons/footerMail.png" alt="mail icon" /><a href="https://www.facebook.com/AIMResearchLab/?fref=ts" style="color:wheat" target="_blank">AIM Research Lab</a></li>
+
+                    </ul>
+                </div>
+            </div><!-- END Row -->
+        </div><!-- END Container -->
+    </footer><!-- END Footer -->
+    <!-- JavaScript file links -->
+    <script src="~/Content/js/jquery.js"></script>			<!-- Jquery -->
+    <script src="~/Content/js/bootstrap.min.js"></script>		<!-- bootstrap -->
+    <script src="~/Content/js/jquery.bxslider.min.js"></script>  <!-- bxslider -->
+    <script src="~/Content/js/tabs.js"></script> <!-- custom tab script -->
+    <script src="~/Content/js/lightbox-2.6.min.js"></script>  <!-- lightbox -->
+    <script src="~/Content/js/jquery.scrollTo.js"></script>  <!-- scollTo -->
+    <script src="~/Content/js/jquery.nav.js"></script>  <!-- one page nav -->
+    <script src="~/Content/js/respond.js"></script>
+    <script>
+        "use strict";
+        // ACTIVATE BXSLIDER (for slider section)
+        $(document).ready(function () {
+            $('.slides').fadeIn().bxSlider({
+                auto: true,
+                pager: false,
+                nextSelector: '#slider-next',
+                prevSelector: '#slider-prev',
+
+                nextText: '<img src="/Content/images/next.png" alt="slider next" />',
+                prevText: '<img src="/Content/images/prev.png" alt="slider prev" />',
+                // triggers slider animations on slide change
+                onSlideBefore: function () {
+                    $('.jumbotron img').addClass("fadeInReallyFast");
+                    $('.jumbotron h1').addClass("fadeInFast");
+                    $('.jumbotron p').addClass("fadeInMed");
+                    $('.jumbotron .button').addClass("fadeInSlow");
+                    $('.jumbotron .buttonSmall').addClass("fadeInSlow");
+                    $('#emailInputSlider').addClass("fadeInSlow");
+
+                    setTimeout(function () {
+                        $('.jumbotron img').removeClass("fadeInReallyFast");
+                        $('.jumbotron h1').removeClass("fadeInFast");
+                        $('.jumbotron p').removeClass("fadeInMed");
+                        $('.jumbotron .button').removeClass("fadeInSlow");
+                        $('.jumbotron .buttonSmall').removeClass("fadeInSlow");
+                        $('#emailInputSlider').removeClass("fadeInSlow");
+                    }, 1400);
+                }
+            });
+
+            //Triggers slider animations on page load
+            $(document).ready(function () {
+                $('.jumbotron img').toggleClass("fadeInReallyFast");
+                $('.jumbotron h1').toggleClass("fadeInFast");
+                $('.jumbotron p').toggleClass("fadeInMed");
+                $('.jumbotron .button').toggleClass("fadeInSlow");
+                $('.jumbotron .buttonSmall').toggleClass("fadeInSlow");
+                $('#emailInputSlider').toggleClass("fadeInSlow");
+
+                setTimeout(function () {
+                    $('.jumbotron img').removeClass("fadeInReallyFast");
+                    $('.jumbotron h1').removeClass("fadeInFast");
+                    $('.jumbotron p').removeClass("fadeInMed");
+                    $('.jumbotron .button').removeClass("fadeInSlow");
+                    $('.jumbotron .buttonSmall').removeClass("fadeInSlow");
+                    $('#emailInputSlider').removeClass("fadeInSlow");
+                }, 1400);
+            });
+
+            //activate second bxslider (for testimonials section)
+            $('.slides2').bxSlider({
+                auto: true,
+                controls: false
+            });
+        });
+
+
+        // ACTIVATE ONE PAGE NAV
+        $(document).ready(function () {
+            $('.nav.navbar-nav.navbar-right').onePageNav();
+        });
+    </script>
+    <script>
+        "use strict";
+        // SCREENSHOT IMAGE HOVERS
+        $('.image').mouseover(function () {
+            $(".overlay", this).stop(true, true).fadeIn();
+        });
+
+        $('.image').mouseout(function () {
+            $(".overlay", this).stop(true, true).fadeOut();
+        });
+    </script>
+    <!-- CONTACT FORM -->
+    <script type="text/javascript">
+  <!--//--><![CDATA[//><!--
+  $(document).ready(function() {
+    $('form#contactForm').submit(function() {
+      $('form#contactForm .error').remove();
+      var hasError = false;
+      $('.requiredField').each(function() {
+        if($.trim($(this).val()) == '') {
+          var labelText = $(this).prev('label').text();
+          $(this).parent().append('<span class="error">You forgot to enter your '+labelText+'.</span>');
+          $(this).addClass('inputError');
+          hasError = true;
+        } else if($(this).hasClass('email')) {
+          if(!emailReg.test($.trim($(this).val()))) {
+            var labelText = $(this).prev('label').text();
+            $(this).parent().append('<span class="error">Sorry! You\'ve entered an invalid '+labelText+'.</span>');
+            $(this).addClass('inputError');
+            hasError = true;
+          }
+        }
+      });
+      if(!hasError) {
+        var formInput = $(this).serialize();
+        $.post($(this).attr('action'),formInput, function(data){
+          $('form#contactForm').slideUp("fast", function() {
+            $(this).before('<p class="tick"><strong>Thanks!</strong> Your email has been delivered!</p>');
+          });
+        });
+      }
+
+      return false;
+    });
+  });
+  //-->!]]>
+    </script>
+</body>
+<!-- Mirrored from rypecreative.com/vertex/ by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 02 Nov 2015 10:33:31 GMT -->
+</html>

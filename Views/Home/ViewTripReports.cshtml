@@ -1,0 +1,79 @@
+﻿@model IEnumerable<DriveSafe_Server.Report>
+@{
+    ViewBag.Title = "ViewTripReports";
+    Layout = null;
+}
+<script src="~/Scripts/CollapsibleLists.compressed.js"></script>
+<script src="~/Scripts/CollapsibleLists.js"></script>
+
+   <script> function toggle(id) {
+     ul = "ul_" + id;
+     img = "img_" + id;
+     ulElement = document.getElementById(ul);
+     imgElement = document.getElementById(img);
+     if (ulElement) {
+         if (ulElement.className == 'closed') {
+             ulElement.className = "open";
+             imgElement.src = "/Content/images/minus.png";
+         } else {
+             ulElement.className = "closed";
+             imgElement.src = "/Content/images/plus.png";
+         }
+     }
+ }
+</script>
+<style>.open {
+	display: block;
+	}
+.closed {
+	display: none;
+	}
+li {
+	list-style-type: none;
+	padding-top: .2em;
+	padding-bottom: .2em;
+	font-size: 18px;
+	}
+        
+li img {
+	vertical-align: middle;
+	}
+</style>
+    
+
+  
+
+
+            
+           
+            @{var DateList = (List<String>)Session["dates"];}
+            <ul class="open">
+
+         @foreach (var p in DateList)
+            {
+                 <li id='@p'>
+             <a  onclick="toggle('@p');"><img src="~/Content/images/plus.png" alt="" id="img_@p" border="0"></a>
+                
+                            <span> @p  </span>
+
+                  <ul id="ul_@p" class="closed">
+                       
+                            @foreach(var i in Model){
+                            if (i.Date.Equals(p)) { 
+                         
+                                 <li > <a style="color:gray;text-decoration:none" href="~/Home/DashBoard?id=@i.UserName&date=@i.Date&tripID=@i.TripID">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;     @i.TripID</a></li>
+                                
+                            }
+                        }
+                           
+                  </ul>
+                        </li>
+         }
+ 
+    
+</ul>                             
+   
+    
+
+    <br /><br /><br />
+

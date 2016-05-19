@@ -1,0 +1,31 @@
+﻿@using DriveSafe_Server
+@model DriveSafe_Server.Driver
+
+@{
+
+    Layout = "~/Views/Shared/UserProfileLayout.cshtml";
+    ViewBag.Title = "Profile";
+    Driver obj = (Driver)Session["User"];
+}
+
+    <h1 style="color:#339999; margin-left:120px">Your Profile</h1><br />
+    <div class="row" style="font-size:15px">
+        <div class="col-md-2"></div>
+        <div class="col-md-4" style="background-color:#339999;color:wheat">
+            <label>Name: </label>&nbsp;&nbsp;&nbsp;@obj.Name <br /><br />
+            <label>User Name: </label>&nbsp;&nbsp;&nbsp;@obj.UserName <br /><br />
+            <label>Car Transmission: </label>&nbsp;&nbsp;&nbsp;@obj.CarType <br /><br />
+
+
+            <label>Gender: </label>&nbsp;&nbsp;&nbsp; @obj.Gender <br /><br />
+
+        </div>
+
+
+    </div>
+
+    <br /><br /><br /><br />
+
+
+
+

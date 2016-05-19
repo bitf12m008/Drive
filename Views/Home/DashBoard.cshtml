@@ -1,0 +1,215 @@
+﻿@model IEnumerable<DriveSafe_Server.TripLog>
+@using DriveSafe_Server
+
+@{
+    Layout = "~/Views/Shared/UserProfileLayout.cshtml";
+    ViewBag.Title = "DashBoard";
+   Report r=(Report)Session["report"];
+    
+}
+<br />
+<div class="row">
+    
+        <div class="col-md-3">
+            <div style="margin-left:50px; overflow:auto; height:440px;width:200px;border:1px solid #339999">@Html.Action("ViewTripReports", "Home")</div>
+
+        </div>
+
+        <div class="col-md-7">
+            <div id='gmap_canvas' style='height:440px;width:700px;'></div>
+        </div>
+        <div class="col-md-2">
+            <img src="/Content/images/brake.png" /> Harsh brake @r.HarshBrakeCount<br />
+            <img src="/Content/images/accel.png" /> Rapid Acceleration @r.OverAccelerationCount <br>
+            <img src="/Content/images/overSpeed.png" /> Over Speed @r.SpeedViolation<br /><br />
+
+        </div>
+    </div>
+<h2>DashBoard</h2>
+<table  class="table table-striped table-bordered table-hover table-condensed table-responsive ">
+    <tr>
+        <td>Date</td>
+        <td>Trip ID</td>
+        <td>Start Time</td>
+        <td>End Time</td>
+        <td>Harsh Brake Count</td>
+        <td>Rapid Acceleration Count</td>
+        <td>Over Speed Count</td>
+        <td>High Speed</td>
+          <td>Engine Idle</td>
+          <td>Batery Voltage</td>
+          <td>Max Coolant Temperature</td>
+        <td>View Detail Log</td>
+        
+        
+
+    </tr>
+    <tr>
+         <td>@r.Date</td>
+        <td>@r.TripID</td>
+        <td>@r.StartTime</td>
+        <td>@r.EndTime</td>
+        <td>@r.HarshBrakeCount</td>
+        <td>@r.OverAccelerationCount</td>
+        <td>@r.SpeedViolation</td>
+        <td>@r.MaxSpeed KM/H</td>
+          <td>@r.EngineIdle minutes</td>
+          <td>@r.Voltage V</td>
+          <td>@r.MaxCoolant C</td>
+        <td><a class="btn" style="background-color:#339999;color:white" href="~/Home/ViewTripLog?id=@r.UserName&date=@r.Date&tripID=@r.TripID">@r.TripID</a></td>
+        
+
+
+    </tr>
+</table>
+<script src='https://maps.googleapis.com/maps/api/js?v=3.exp'></script>
+<div style='overflow:hidden;height:440px;width:700px;'>
+    <style>#gmap_canvas img{max-width:none!important;background:none!important}</style></div>
+
+
+<html><body>
+    @{
+        string hb=null,oa=null, os=null,gpsPoints=null;
+    foreach(var p in Model){
+        if(p.HarshBrakeViolation==1){
+            
+            hb=hb+p.Latitude+"|";
+            hb += p.Longitude + "|";
+            
+        }
+        if(p.OverAccelViolation==1){
+            oa = oa + p.Latitude + "|";
+            oa += p.Longitude + "|";
+        
+        }
+        if (p.SpeedViolation == 1)
+        {
+            os = os + p.Latitude + "|";
+            os += p.Longitude + "|";
+
+        }
+        if (p.Latitude != "0.0" && p.Longitude != "0.0") {
+            gpsPoints += p.Latitude + "," + p.Longitude + "|";
+        }
+      
+    }
+     // gpsPoints = "31.485722, 74.32648689999996|31.51307510000001, 74.33446090000007|31.5232632, 74.3484833|31.5295784, 74.37878360000002";
+    }
+
+    
+    
+<script>
+   
+    
+
+    google.maps.event.addDomListener(window, 'load', function () { init_map('@hb', '@oa', '@os', '@gpsPoints'); });</script> 
+
+    <script type='text/javascript'>
+        function init_map(brake, accel, speed, gps) {
+
+
+            
+            
+           
+            var c = gps.split("|");
+            var center = new google.maps.LatLng(c[0].split(',')[0], c[0].split(',')[1]);
+
+
+            var myOptions = {
+                zoom: 13,
+                center: center,
+                mapTypeControl: true,
+                mapTypeControlOptions: { style: google.maps.MapTypeControlStyle.DROPDOWN_MENU },
+                navigationControl: true,
+                mapTypeId: google.maps.MapTypeId.HYBRID
+            }
+
+            var map = new google.maps.Map(document.getElementById("gmap_canvas"), myOptions);
+
+
+            var coordinates = gps.split("|");
+            var polylineCoordinates = new Array();
+            for (i = 0; i < coordinates.length; i++) {
+               var point = new google.maps.LatLng(coordinates[i].split(',')[0], coordinates[i].split(',')[1]);
+                polylineCoordinates.push(point);
+            }
+
+
+            var polyline = new google.maps.Polyline({
+                path: polylineCoordinates,
+                geodesic: true,
+                strokeColor: '#FF0000',
+                strokeOpacity: 1.0,
+                strokeWeight: 2
+            });
+
+
+            polyline.setMap(map);
+
+            var myLatlng = new google.maps.LatLng(c[0].split(',')[0], c[0].split(',')[1]);
+     
+            var marker = new google.maps.Marker({
+                position: myLatlng,
+                title: "Source"
+             });
+            marker.setMap(map);
+
+            if (brake)
+            {
+                arr1 = brake.split("|");
+                for (var count = 0; count < arr1.length - 1; count++) {
+                    var myLatlng = new google.maps.LatLng(arr1[count], arr1[count + 1]);
+                    count++;
+                    var marker = new google.maps.Marker({
+                    position: myLatlng,
+                    title: "Harsh Brake!",
+                    icon: '/Content/images/brake.png'
+
+                });
+                marker.setMap(map);
+    
+                }
+            }
+            if (accel) {
+                arr2 = accel.split("|");
+                for (var count = 0; count < arr2.length - 1; count++) {
+                    var myLatlng = new google.maps.LatLng(arr2[count], arr2[count + 1]);
+                    count++;
+                    var marker = new google.maps.Marker({
+                        position: myLatlng,
+                        title: "Rapid Acceleration!",
+                        icon: '/Content/images/accel.png'
+
+                    });
+                    marker.setMap(map);
+
+                }
+            }
+            if (speed) {
+                arr3 = speed.split("|");
+                for (var count = 0; count < arr3.length - 1; count++) {
+                    var myLatlng = new google.maps.LatLng(arr3[count], arr3[count + 1]);
+                    count++;
+                    var marker = new google.maps.Marker({
+                        position: myLatlng,
+                        title: "Over Speed!",
+                        icon: '/Content/images/overSpeed.png'
+
+                    });
+                    marker.setMap(map);
+                }
+            }
+        }
+    //google.maps.event.addDomListener(window, 'load', init_map);
+
+</script>
+
+
+
+
+
+
+   
+    </body>
+    </html>
+
